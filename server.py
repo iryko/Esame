@@ -31,11 +31,6 @@ class Events(Resource):
         }
         return events[event_id], CREATED
 
-        # if events[event_id]['title'] == ['title']:
-        #     return BAD_REQUEST
-        # else:
-        #     return events[event_id], CREATED
-
     def get(self):
         return list(events.values()), OK
 
