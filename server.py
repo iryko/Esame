@@ -27,7 +27,8 @@ class Events(Resource):
             'description': args['description'],
             'date': args['date'],
         }
-        return events[event_id], CREATED
+        if events[event_id]['title'] and events[event_id]['date'] not in events[event_id]:
+            return events[event_id], CREATED
 
     def get(self):
         return list(events.values()), OK
