@@ -33,15 +33,7 @@ class Events(Resource):
         return list(events.values()), OK
 
 class Event(Resource):
-    def get(self, title, date):
-        event_id = title + "_" + date
-        if event_id in events:
-            return events[event_id], OK
-        else:
-            return None, NOT_FOUND
-
-    def put(self, title, date):
-        event_id = title + "_" + date
+    def put(self, event_id):
         if event_id in events:
             parser = reqparse.RequestParser()
             parser.add_argument('title', type=non_empty_str, required=True)
@@ -54,12 +46,11 @@ class Event(Resource):
                 'description': args['description'],
                 'date': args['date'],
             }
-            return events[event_id], OK
+            return OK
         else:
             return None, NOT_FOUND
 
-    def delete(self, title, date):
-        event_id = title + "_" + date
+    def delete(self, event_id):
         if event_id in events:
             del events[event_id]
             return None, NO_CONTENT
@@ -67,4 +58,4 @@ class Event(Resource):
             return None, NOT_FOUND
 
 api.add_resource(Events, '/events/')
-api.add_resource(Event, '/event/<title>/<date>')
+api.add_resource(Event, '/events/<event_id>')
